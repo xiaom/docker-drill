@@ -40,6 +40,7 @@ ADD ./zoo.cfg /opt/zookeeper/conf/zoo.cfg
 RUN cd /opt/downloads && curl -SsfLO "https://builds.apache.org/job/drill-scm/lastSuccessfulBuild/artifact/distribution/target/apache-drill-0.5.0-incubating-SNAPSHOT.tar.gz"
 RUN cd /opt && tar xvfz /opt/downloads/apache-drill-0.5.0-incubating-SNAPSHOT.tar.gz
 RUN mv /opt/apache-drill-0.5.0-incubating-SNAPSHOT /opt/drill
+RUN mkdir -p /var/log/drill
 
 # Download and Install etcd
 RUN cd /opt/downloads && curl -s https://storage.googleapis.com/golang/go1.3.src.tar.gz | tar -v -C /usr/local -xz
