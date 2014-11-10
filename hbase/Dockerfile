@@ -2,28 +2,7 @@
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM phusion/baseimage:0.9.15
-
-# Set correct environment variables.
-ENV HOME /root
-
-# Regenerate SSH host keys. baseimage-docker does not contain any, so you
-# have to do that yourself. You may also comment out this instruction; the
-# init system will auto-generate one during boot.
-RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
-
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
-
-# ...put your own build instructions here...
-# make sure the package repository is up to date
-RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
-
-ENV DEBIAN_FRONTEND noninteractive
-
-# Install build requirements
-RUN apt-get update
-RUN apt-get install -y build-essential curl openjdk-7-jdk
+FROM xiaom/base
 
 # Download and Install HBase
 ENV HBASE_VERSION 0.94.24
@@ -34,12 +13,9 @@ RUN mv /opt/hbase-$HBASE_VERSION /opt/hbase
 
 # Data will go here (see hbase-site.xml)
 RUN mkdir -p /data/hbase /opt/hbase/logs
-
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 ENV HBASE_SERVER /opt/hbase/bin/hbase
 
 ADD ./hbase-site.xml /opt/hbase/conf/hbase-site.xml
-
 ADD ./zoo.cfg /opt/hbase/conf/zoo.cfg
 
 # Thrift API
@@ -61,5 +37,3 @@ EXPOSE 60030
 RUN mkdir /etc/service/hbase 
 ADD ./hbase-server /etc/service/hbase/run
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
