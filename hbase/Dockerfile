@@ -15,8 +15,8 @@ RUN mv /opt/hbase-$HBASE_VERSION /opt/hbase
 RUN mkdir -p /data/hbase /opt/hbase/logs
 ENV HBASE_SERVER /opt/hbase/bin/hbase
 
-ADD ./hbase-site.xml /opt/hbase/conf/hbase-site.xml
-ADD ./zoo.cfg /opt/hbase/conf/zoo.cfg
+ADD ./files/hbase-site.xml /opt/hbase/conf/hbase-site.xml
+ADD ./files/zoo.cfg /opt/hbase/conf/zoo.cfg
 
 # Thrift API
 EXPOSE 9090
@@ -35,5 +35,7 @@ EXPOSE 60030
 
 # Add service to runit
 RUN mkdir /etc/service/hbase 
-ADD ./hbase-server /etc/service/hbase/run
+ADD ./files/hbase-server /etc/service/hbase/run
 
+# cleanup
+RUN rm -rf /opt/downloads
