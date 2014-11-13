@@ -22,7 +22,7 @@ done
 # The myid file consists of a single line containing only the text of that machine's id.
 # So myid of server 1 would contain the text "1" and nothing else.
 # The id must be unique within the ensemble and should have a value between 1 and 255.
-docker-bash zoo1 echo 1 > /tmp/zookeeper/myid
-docker-bash zoo2 echo 2 > /tmp/zookeeper/myid
-docker-bash zoo3 echo 3 > /tmp/zookeeper/myid
+docker exec  zoo1 sh -c 'echo 1 > /tmp/zookeeper/myid'
+docker exec  zoo2 sh -c 'echo 2 > /tmp/zookeeper/myid'
+docker exec  zoo3 sh -c 'echo 3 > /tmp/zookeeper/myid'
 set +x
