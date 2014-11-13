@@ -10,6 +10,7 @@ RUN mkdir -p /opt/downloads
 RUN cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz"
 RUN cd /opt && tar xvfz /opt/downloads/zookeeper-3.4.6.tar.gz
 RUN mv /opt/zookeeper-3.4.6 /opt/zookeeper
+RUN mkdir -p /tmp/zookeeper
 ADD ./files/zoo.cfg /opt/zookeeper/conf/zoo.cfg
 
 # Zookeeper - used to find servers
@@ -20,4 +21,4 @@ RUN mkdir -p /etc/service/zookeeper
 ADD ./files/zookeeper-server /etc/service/zookeeper/run
 
 # Cleanup
-RUN rm -rf /opt/downloads
+RUN rm -rf /opt/downloads/* && rmdir /opt/downloads 

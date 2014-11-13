@@ -1,17 +1,19 @@
 #!/bin/bash
-for container in "$@"
+set -x
+for c in "$@"
 do
     # start the containter
+    container=$c
 	docker start $container
     # check the returned value and create container if not exist. Use the DNS service of the host machine.
     if [ $? -ne 0 ]; then 
-	    docker run -d -P -h $container --name $container --dns 172.17.42.1 -t xiaom/drill
+	    docker run -d -P -h $container --name $container --dns=172.17.42.1 -t xiaom/drill
     fi
     # add the containter ip to the dns record of the host machine
-	container_ip=$(docker inspect $container | grep IPAddress | cut -f4 -d'"')
-	echo "host-record=$container,$container_ip" > /opt/docker/dnsmasq.d/0host_$container
+	## container_ip=$(docker inspect $container | grep IPAddress | cut -f4 -d'"')
+	## echo "host-record=$container,$container_ip" > /opt/docker/dnsmasq.d/0host_$container
 done
-service dnsmasq restart
+# service dnsmasq restart
 
 # ZooKeeper:
 #
@@ -23,3 +25,4 @@ service dnsmasq restart
 docker-bash zoo1 echo 1 > /tmp/zookeeper/myid
 docker-bash zoo2 echo 2 > /tmp/zookeeper/myid
 docker-bash zoo3 echo 3 > /tmp/zookeeper/myid
+set +x

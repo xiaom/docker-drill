@@ -23,5 +23,4 @@ RUN mkdir -p /etc/service/drill
 ADD ./files/drill-server /etc/service/drill/run
 
 # Cleanup
-RUN rm -rf /opt/downloads
-
+RUN rm -rf /opt/downloads/* && rmdir /opt/downloads
