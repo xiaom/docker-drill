@@ -2,36 +2,19 @@
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM xiaom/base
+FROM xiaom/zookeeper
 
 RUN mkdir -p /opt/downloads
-# Download and Install Zookeeper
-
-RUN cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz"
-RUN cd /opt && tar xvfz /opt/downloads/zookeeper-3.4.6.tar.gz
-RUN mv /opt/zookeeper-3.4.6 /opt/zookeeper
-ADD ./zoo.cfg /opt/zookeeper/conf/zoo.cfg
+ENV DRILL_VERSION 0.7.0
 
 # Download and Install Drill
-RUN cd /opt/downloads && curl -SsfLO "https://builds.apache.org/job/drill-scm/lastSuccessfulBuild/artifact/distribution/target/apache-drill-0.5.0-incubating-SNAPSHOT.tar.gz"
-RUN cd /opt && tar xvfz /opt/downloads/apache-drill-0.5.0-incubating-SNAPSHOT.tar.gz
-RUN mv /opt/apache-drill-0.5.0-incubating-SNAPSHOT /opt/drill
+RUN cd /opt/downloads && curl -SsfLO "https://builds.apache.org/job/drill-scm/lastSuccessfulBuild/artifact/distribution/target/apache-drill-${DRILL_VERSION}-incubating-SNAPSHOT.tar.gz"
+RUN cd /opt && tar xvfz /opt/downloads/apache-drill-${DRILL_VERSION}-incubating-SNAPSHOT.tar.gz
+RUN mv /opt/apache-drill-${DRILL_VERSION}-incubating-SNAPSHOT /opt/drill
 RUN mkdir -p /var/log/drill
 
-# Download and Install etcd
-RUN cd /opt/downloads && curl -s https://storage.googleapis.com/golang/go1.3.src.tar.gz | tar -v -C /usr/local -xz
-RUN cd /usr/local/go/src && ./make.bash --no-clean 2>&1
-ENV PATH /usr/local/go/bin:$PATH
-RUN cd /opt && git clone https://github.com/coreos/etcd
-RUN cd /opt/etcd && ./build
-
-# etcd 
-EXPOSE 4001 7001
-
-# Web UI
+# Drill Web UI
 EXPOSE 8047
-# Zookeeper - used to find servers
-EXPOSE 2181 2888 3888
 # Drillbit
 EXPOSE 31010 31011 31012
 
@@ -39,14 +22,3 @@ EXPOSE 31010 31011 31012
 RUN mkdir -p /etc/service/drill 
 ADD ./drill-server /etc/service/drill/run
 
-RUN mkdir -p /etc/service/zookeeper 
-ADD ./zookeeper-server /etc/service/zookeeper/run
-
-
-RUN mkdir -p /etc/service/etcd
-ADD ./etcd.sh /etc/service/etcd/run
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Workaround for the 2267 bug
-RUN /usr/bin/workaround-docker-2267
