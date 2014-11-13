@@ -20,5 +20,8 @@ EXPOSE 31010 31011 31012
 
 # Add service to runit
 RUN mkdir -p /etc/service/drill 
-ADD ./drill-server /etc/service/drill/run
+ADD ./files/drill-server /etc/service/drill/run
+
+# Cleanup
+RUN rm -rf /opt/downloads
 
