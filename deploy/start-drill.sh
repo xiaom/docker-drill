@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
-docker run -d -p 8047:8047 -v /var/log/docker/drill/zoo1/:/var/log/drill/ -h zoo1 --name zoo1 --dns=172.17.42.1 -t xiaom/drill
-docker run -d -p 8048:8047 -v /var/log/docker/drill/zoo2/:/var/log/drill/ -h zoo2 --name zoo2 --dns=172.17.42.1 -t xiaom/drill
-docker run -d -p 8049:8047 -p 60010:60010 -p 60030:60030 -v /var/log/docker/drill/zoo3/:/var/log/drill/ -h zoo3 --name zoo3 --dns=172.17.42.1 -t xiaom/hbase
+docker run -d -p 8047:8047 -v /var/log/docker/drill/zoo1/:/var/log/drill/ -h zoo1.drill.dev.docker --name zoo1 --dns=172.17.42.1 -t xiaom/drill
+docker run -d -p 8048:8047 -v /var/log/docker/drill/zoo2/:/var/log/drill/ -h zoo2.drill.dev.docker --name zoo2 --dns=172.17.42.1 -t xiaom/drill
+docker run -d -p 8049:8047 -p 60010:60010 -p 60030:60030 -v /var/log/docker/drill/zoo3/:/var/log/drill/ -h zoo3.hbase.dev.docker --name zoo3 --dns=172.17.42.1 -t xiaom/hbase
 
 # ZooKeeper:
 #
