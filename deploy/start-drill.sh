@@ -24,7 +24,7 @@ do
         # Instead, use docker-bash tool
         docker-bash zoo$i sh -c "echo $i > /tmp/zookeeper/myid"
         if [ $? -eq 0 ]; then
-            echo "zoo"$i" Succed"
+            echo "zoo"$i" Succeed"
             break
         fi
         echo "Trying to connect to container zoo"$i", wait until the container up."
