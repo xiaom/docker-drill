@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo docker rm -f $(docker ps | grep drill | awk '{print  $1}')
+sudo docker rm -f $(docker ps | grep "/sbin/my_init" | awk '{print  $1}')

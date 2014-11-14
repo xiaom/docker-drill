@@ -10,12 +10,13 @@ ENV HOME /root
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
-ENV DEBIAN_FRONTEND noninteractive
+# ENV DEBIAN_FRONTEND noninteractive
 
 # Install build requirements
-RUN apt-get update
-RUN apt-get install -y curl openjdk-7-jdk
+# Bundle command into one and thus reduce the image sizes
+RUN apt-get update && \
+  apt-get install --no-install-recommends -y curl openjdk-7-jdk && \
+  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

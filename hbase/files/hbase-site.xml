@@ -3,34 +3,19 @@
 
   <property>
      <name>hbase.zookeeper.quorum</name>
-     <value>@IP@</value>
+     <value>zoo3.hbase.dev.docker</value>
   </property>
   <property>
     <name>hbase.rootdir</name>
     <value>file:////data/hbase</value>
   </property>
-
-  <property>
-    <name>hbase.master.dns.interface</name>
-    <value>eth0</value>
+  <property>       
+    <name>hbase.master.info.bindAddress</name>       
+    <value>zoo3.hbase.dev.docker</value>  
+    <description>Enter the HBase Master server hostname</description>
   </property>
   <property>
-    <name>hbase.master.ipc.address</name>
-    <value>@IP@</value>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
   </property>
-
-  <property>
-    <name>hbase.regionserver.dns.interface</name>
-    <value>eth0</value>
-  </property>
-  <property>
-    <name>hbase.regionserver.ipc.address</name>
-    <value>@IP@</value>
-  </property>
-
-  <property>
-    <name>hbase.zookeeper.dns.interface</name>
-    <value>eth0</value>
-  </property>
-
 </configuration>

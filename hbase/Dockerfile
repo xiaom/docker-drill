@@ -2,40 +2,27 @@
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM xiaom/base
+FROM xiaom/drill
 
 # Download and Install HBase
 ENV HBASE_VERSION 0.94.24
 
-RUN mkdir -p /opt/downloads && cd /opt/downloads && curl -SsfLO "http://www.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz"
-RUN cd /opt && tar xvfz /opt/downloads/hbase-$HBASE_VERSION.tar.gz
-RUN mv /opt/hbase-$HBASE_VERSION /opt/hbase
+RUN cd /opt && \
+  curl -SsfLO "http://www.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz" && \
+  tar xzf hbase-$HBASE_VERSION.tar.gz && \
+  mv hbase-$HBASE_VERSION hbase && \
+  rm *.tar.gz && \
+  mkdir -p /data/hbase && \
+  mkdir -p /etc/service/hbase && \
+  mkdir -p /tmp/hbase
+  
+ADD ./files/* /tmp/hbase/
+RUN  cd /tmp/hbase/ && \
+     mv hbase-site.xml /opt/hbase/conf/hbase-site.xml && \
+     mv hbase-server /etc/service/hbase/run && \
+     chmod +x load-testdata.sh
 
-# Data will go here (see hbase-site.xml)
-RUN mkdir -p /data/hbase /opt/hbase/logs
-ENV HBASE_SERVER /opt/hbase/bin/hbase
-
-ADD ./files/hbase-site.xml /opt/hbase/conf/hbase-site.xml
-ADD ./files/zoo.cfg /opt/hbase/conf/zoo.cfg
-
-# Thrift API
-EXPOSE 9090
-# Thrift Web UI
-EXPOSE 9095
-# HBase's zookeeper - used to find servers
-EXPOSE 2181
-# HBase Master API port
-EXPOSE 60000
-# HBase Master web UI at :60010/master-status;  ZK at :60010/zk.jsp
-EXPOSE 60010
-# Region server API port
-EXPOSE 60020
-# HBase Region server web UI at :60030/rs-status
-EXPOSE 60030
-
-# Add service to runit
-RUN mkdir /etc/service/hbase 
-ADD ./files/hbase-server /etc/service/hbase/run
-
-# cleanup
-RUN rm -rf /opt/downloads
+# Thrift API and Web UI
+EXPOSE 9090 9095
+# HMaster API port, Web Port, HRegion API port, HRegion Web Port
+EXPOSE 2181 60000 60010 60020 60030
