@@ -1,2 +1,3 @@
 #!/bin/sh
-exec /opt/drill/bin/drillbit.sh start &
+sv start hbase || exit 1 
+exec /drill/bin/drillbit.sh start

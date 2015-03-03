@@ -1,4 +1,5 @@
 #!/bin/sh
-/opt/hbase/bin/hbase-daemon.sh start master
-/opt/hbase/bin/hbase-daemon.sh start regionserver
+sv start zookeeper || exit 1
+exec /hbase/bin/hbase-daemon.sh start master
+exec /hbase/bin/hbase-daemon.sh start regionserver
 

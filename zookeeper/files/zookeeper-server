@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /opt/zookeeper/bin/zkServer.sh start &
+exec /zookeeper/bin/zkServer.sh start
