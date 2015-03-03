@@ -3,7 +3,7 @@
 
   <property>
      <name>hbase.zookeeper.quorum</name>
-     <value>zoo3.hbase.dev.docker</value>
+     <value>localhost</value>
   </property>
   <property>
     <name>hbase.rootdir</name>
@@ -11,7 +11,7 @@
   </property>
   <property>       
     <name>hbase.master.info.bindAddress</name>       
-    <value>zoo3.hbase.dev.docker</value>  
+    <value>localhost</value>
     <description>Enter the HBase Master server hostname</description>
   </property>
   <property>
