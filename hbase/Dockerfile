@@ -4,21 +4,21 @@
 # a list of version numbers.
 FROM xiaom/drill
 
-# Download and Install HBase
-ENV HBASE_VERSION 0.94.24
+# the version number must be consistent with pom.xml
+ENV HBASE_VERSION 0.98.7
 
-RUN cd /opt && \
-  curl -SsfLO "http://www.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz" && \
-  tar xzf hbase-$HBASE_VERSION.tar.gz && \
-  mv hbase-$HBASE_VERSION hbase && \
+# RUN curl -SsfLO "http://archive.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz"
+ADD ./files /opt
+
+RUN mkdir -p /hbase && \
+  cd /opt && \
+  tar xzf hbase-$HBASE_VERSION-hadoop2-bin.tar.gz --strip=1 -C /hbase && \
   rm *.tar.gz && \
   mkdir -p /data/hbase && \
-  mkdir -p /etc/service/hbase && \
-  mkdir -p /tmp/hbase
-  
-ADD ./files/* /tmp/hbase/
-RUN  cd /tmp/hbase/ && \
-     mv hbase-site.xml /opt/hbase/conf/hbase-site.xml && \
+  mkdir -p /etc/service/hbase
+ 
+RUN  cd /opt/ && \
+     mv hbase-site.xml /hbase/conf/hbase-site.xml && \
      mv hbase-server /etc/service/hbase/run && \
      chmod +x load-testdata.sh
 

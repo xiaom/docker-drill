@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo docker build -t xiaom/drill .
+docker build -t xiaom/drill .
