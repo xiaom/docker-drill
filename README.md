@@ -1,3 +1,5 @@
+**NOTES:** The document is outdated and need to be update later. We did not follow the best practice of docker container and use it a VMs. The plan is to clean it up in next iteration.
+
 # Build the image
 
 ```
