@@ -14,12 +14,12 @@ RUN mkdir -p /hbase && \
   cd /opt && \
   tar xzf hbase-$HBASE_VERSION-hadoop2-bin.tar.gz --strip=1 -C /hbase && \
   rm *.tar.gz && \
-  mkdir -p /data/hbase && \
-  mkdir -p /etc/service/hbase
- 
+  mkdir -p /data/hbase /etc/service/hmaster /etc/service/hregionserver
+
 RUN  cd /opt/ && \
      mv hbase-site.xml /hbase/conf/hbase-site.xml && \
-     mv hbase-server /etc/service/hbase/run && \
+     mv hbase-master /etc/service/hmaster/run && \
+     mv hbase-regionserver /etc/service/hregionserver/run && \
      chmod +x load-testdata.sh
 
 # Thrift API and Web UI
