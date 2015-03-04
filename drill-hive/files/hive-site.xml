@@ -1,0 +1,44 @@
+<configuration>
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:mysql://localhost:3306/mysql?createDatabaseIfNotExist=true</value>
+    <description>Enter your Hive Metastore Connection URL, for example if MySQL: jdbc:mysql://localhost:3306/mysql?createDatabaseIfNotExist=true</description>    
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>dbuser</value>
+    <description>Enter your Hive Metastore database user name.</description>
+  </property>
+  <property>       
+   <name>javax.jdo.option.ConnectionPassword</name>       
+   <value>dbuser</value>  
+   <description>Enter your Hive Metastore database password.</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.jdbc.Driver</value>
+  <description>Enter your Hive Metastore Connection Driver Name, for example if MySQL: com.mysql.jdbc.Driver</description>
+  </property>
+  <!--
+  <property>
+    <name>datanucleus.fixedDatastore</name>
+    <value>true</value>
+   </property>
+   -->
+    <property>
+      <name>datanucleus.autoCreateSchema</name>
+      <value>false</value>
+    </property>
+
+    <property>
+      <name>datanucleus.fixedDatastore</name>
+      <value>true</value>
+    </property>
+
+    <property>
+      <name>hive.metastore.uris</name>
+      <value>thrift://localhost:9083</value>
+      <description>IP address (or fully-qualified domain name) and port of the metastore host</description>
+    </property>
+
+</configuration>

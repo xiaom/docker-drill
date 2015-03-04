@@ -25,4 +25,4 @@ RUN  cd /opt/ && \
 # Thrift API and Web UI
 EXPOSE 9090 9095
 # HMaster API port, Web Port, HRegion API port, HRegion Web Port
-EXPOSE 2181 60000 60010 60020 60030
+EXPOSE 2181 60000 60010 60020 60031

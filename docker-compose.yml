@@ -1,0 +1,10 @@
+hbase:
+    image: xiaom/hbase
+    ports:
+        - "8047:8047"
+        - "60010:60010"
+        - "60030:60030"
+hive:
+    image: xiaom/drill-hive
+    ports:
+        - "8048:8047"

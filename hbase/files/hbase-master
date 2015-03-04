@@ -1,0 +1,3 @@
+#!/bin/sh
+sv start zookeeper || exit 1
+exec /hbase/bin/hbase-daemon.sh start master
