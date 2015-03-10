@@ -1,3 +1,3 @@
 #!/bin/sh
 sed  -i "s/ZK_PORT_2181_TCP_ADDR/$ZK_PORT_2181_TCP_ADDR/g" /hbase/conf/hbase-site.xml
-exec /hbase/bin/hbase-daemon.sh start master
+exec /hbase/bin/hbase master start
