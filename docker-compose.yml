@@ -8,6 +8,9 @@ drill:
     hostname: drill
     ports:
         - "8047:8047"
+        - "31010:31010"
+        - "31011:31011"
+        - "31012:31012"
     links:
         - zookeeper:zk
         - hbase:hbase
