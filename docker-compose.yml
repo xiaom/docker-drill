@@ -11,6 +11,7 @@ drill:
     links:
         - zookeeper:zk
         - hbase:hbase
+        - hive:hive
 hbase:
     image: xiaom/hbase
     hostname: hbase
