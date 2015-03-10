@@ -27,7 +27,6 @@ ENV HIVE_CONF $HIVE_HOME/conf
 RUN cp /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/
 COPY root/hive/conf /hive/conf
 
-
 # Metastore 
 # The schematool cannot recognize version 0.13.1 and thus we use 0.13.0 instead
 RUN sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \

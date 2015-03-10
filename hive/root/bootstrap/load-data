@@ -1,0 +1,2 @@
+#!/bin/sh
+/hive/bin/hive -f /bootstrap/load_Integer_Table.hql
