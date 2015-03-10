@@ -1,2 +1,4 @@
 #!/bin/sh
+sed -i "s/ZK_PORT_2181_TCP_ADDR/$ZK_PORT_2181_TCP_ADDR/g" /drill/conf/drill-override.conf
 exec /drill/bin/drillbit.sh start
+exec tail -F /var/log/drill/drillbit.log
