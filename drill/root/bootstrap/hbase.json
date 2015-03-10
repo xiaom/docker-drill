@@ -1,0 +1,11 @@
+{
+  "name": "hbase",
+  "config": {
+      "type": "hbase",
+      "config": {
+        "hbase.zookeeper.quorum": "ZK_PORT_2181_TCP_ADDR",
+        "hbase.zookeeper.property.clientPort": "2181"
+      },
+      "enabled": true
+  }
+}

@@ -3,8 +3,8 @@ FROM xiaom/base
 # Install build requirements
 RUN apt-get install --no-install-recommends -y mysql-server libmysql-java
 
-ADD ./files /opt
-RUN mkdir -p /hadoop /hive /etc/service/hiveserver2 /etc/service/metastore /etc/service/mysql
+COPY root /
+RUN mkdir -p /hadoop /hive
 # ------
 # Hadoop
 # ------
@@ -24,9 +24,10 @@ RUN cd /opt; tar xzf apache-hive-$HIVE_VERSION-bin.tar.gz --strip=1 -C /hive && 
 ENV HIVE_HOME /hive
 ENV HIVE_CONF $HIVE_HOME/conf
 
-RUN cp /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/ && \
-    mv /opt/hive-site.xml $HIVE_CONF/hive-site.xml
-    
+RUN cp /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/
+COPY root/hive/conf /hive/conf
+
+
 # Metastore 
 # The schematool cannot recognize version 0.13.1 and thus we use 0.13.0 instead
 RUN sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
@@ -39,9 +40,4 @@ RUN sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf && \
   bash /tmp/config && \
   rm -f /tmp/config
 
-RUN cd /opt && \
-    mv mysql /etc/service/mysql/run && \
-    mv metastore /etc/service/metastore/run && \
-    mv hiveserver2 /etc/service/hiveserver2/run
-
-EXPOSE 10000
+EXPOSE 10000 9083

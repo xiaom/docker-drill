@@ -10,8 +10,8 @@ curl -SsfLO "http://archive.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-
 curl -SsfLO "http://archive.apache.org/dist/hbase/hbase-$HBASE_VERSION/hbase-$HBASE_VERSION.tar.gz"
 curl -SsfLO "http://www.apache.org/dist/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz"
 
-mv apache-drill-${DRILL_VERSION}-SNAPSHOT.tar.gz  drill/files
-mv hadoop-$HADOOP_VERSION.tar.gz hive/files
-mv apache-hive-$HIVE_VERSION-bin.tar.gz hive/files
-mv hbase-$HBASE_VERSION.tar.gz hbase/files
-mv zookeeper-${ZOOKEEPER_VERSION}.tar.gz zookeeper/files
+mv apache-drill-${DRILL_VERSION}-SNAPSHOT.tar.gz  drill/root/opt/
+mv hadoop-$HADOOP_VERSION.tar.gz hive/root/opt/
+mv apache-hive-$HIVE_VERSION-bin.tar.gz hive/root/opt/
+mv hbase-$HBASE_VERSION.tar.gz hbase/root/opt/
+mv zookeeper-${ZOOKEEPER_VERSION}.tar.gz zookeeper/root/opt/
