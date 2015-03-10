@@ -1,10 +1,25 @@
-hbase:
-    image: xiaom/hbase
+zookeeper:
+    image: xiaom/zookeeper
+    hostname: zk
+    ports:
+        - "2181:2181"
+drill:
+    image: xiaom/drill
+    hostname: drill
     ports:
         - "8047:8047"
+    links:
+        - zookeeper:zk
+        - hbase:hbase
+hbase:
+    image: xiaom/hbase
+    hostname: hbase
+    ports:
         - "60010:60010"
         - "60030:60030"
-hive:
-    image: xiaom/drill-hive
-    ports:
-        - "8048:8047"
+    links:
+        - zookeeper:zk
+#hive:
+#    image: xiaom/drill-hive
+#    ports:
+#        - "8048:8047"

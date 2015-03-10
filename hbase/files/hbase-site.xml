@@ -3,7 +3,7 @@
 
   <property>
      <name>hbase.zookeeper.quorum</name>
-     <value>localhost</value>
+     <value>ZK_PORT_2181_TCP_ADDR</value>
   </property>
   <property>
     <name>hbase.rootdir</name>

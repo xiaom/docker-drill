@@ -1,8 +1,4 @@
-# Use phusion/baseimage as base image. To make your builds reproducible, make
-# sure you lock down to a specific version, not to `latest`!
-# See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
-# a list of version numbers.
-FROM xiaom/drill
+FROM xiaom/base
 
 # the version number must be consistent with pom.xml
 ENV HBASE_VERSION 0.98.7

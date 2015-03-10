@@ -1,3 +1,2 @@
 #!/bin/sh
-sv start zookeeper || exit 1 
 exec /drill/bin/drillbit.sh start

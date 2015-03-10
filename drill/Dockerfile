@@ -1,4 +1,4 @@
-FROM xiaom/zookeeper
+FROM xiaom/base
 
 ENV DRILL_VERSION 0.8.0
 
@@ -15,4 +15,9 @@ RUN mv /opt/drill-server /etc/service/drill/run && \
  mv /opt/drill-override.conf /drill/conf/   && \
  mv /opt/logback.xml /drill/conf/
 # Web UI and three Drillbit port
+
+# Example to update configuration
+# 
+# sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" "$PGDATA"/postgresql.conf
+
 EXPOSE 8047 31010 31011 31012

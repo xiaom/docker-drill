@@ -1,4 +1,3 @@
 #!/bin/sh
-sv start hmaster || exit 1
 exec /hbase/bin/hbase-daemon.sh start regionserver
 
