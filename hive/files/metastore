@@ -1,0 +1,4 @@
+#!/bin/sh
+sv start mysql || exit 1
+exec $HIVE_HOME/bin/hive --service metastore > /tmp/metastore.out 2> /tmp/metastore.log
+
