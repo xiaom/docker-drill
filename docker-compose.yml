@@ -15,6 +15,8 @@ drill:
         - zookeeper:zk
         - hbase:hbase
         - hive:hive
+    volumes:
+        - share:/share
 hbase:
     image: xiaom/hbase
     hostname: hbase
@@ -23,6 +25,10 @@ hbase:
         - "60030:60030"
     links:
         - zookeeper:zk
+    volumes:
+        - share:/share
 hive:
     image: xiaom/hive
     hostname: hive
+    volumes:
+        - share:/share

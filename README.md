@@ -1,5 +1,17 @@
 **NOTES:** The document is outdated and need to be update later. We did not follow the best practice of docker container and use it a VMs. The plan is to clean it up in next iteration.
 
+The host directoy is `share` is mounted to `/share` directoy in every container.
+
+```
+docker exec dockerdrill_hive_1 /share/hive/load-data.sh
+docker exec dockerdrill_hive_1 /hive/bin/hive -e "select * from Integer_table"
+docker exec dockerdrill_hive_1 /share/hive/showtables.sh
+```
+
+====
+
+**The following should be updated later**
+
 # Build the image
 
 There is a Dockerfile under each service folder. For example, under drill
