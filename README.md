@@ -2,11 +2,18 @@
 
 # Build the image
 
+There is a Dockerfile under each service folder. For example, under drill
+
 ```
+cd drill
 docker build -t xiaom/drill .
 ```
 
-# Create a container (run an image)
+# Start the contianer
+
+`docker-compose` is your friend.
+
+## Create a container (run an image)
 
 ```
 # docker run --name [container name] -p [port to access:port exposed] -i -t [memcached image name]
@@ -16,44 +23,47 @@ docker build -t xiaom/drill .
 docker run --name zoo1 -h zoo1 -dns 172.17.42.1 -P xiaom/drill
 ```
 
-# Expost ports
+## Expost ports
 
 - https://github.com/wsargent/docker-cheat-sheet#exposing-ports
 - https://www.digitalocean.com/community/tutorials/docker-explained-how-to-create-docker-containers-running-memcached
 
 # Runtime docker configuration
 
+In the entrypoint, we use sed/perl update it on the fly
+
 - http://ask.projectatomic.io/en/question/72/ansible-run-time-docker-configuration/
-- The trivial will use sed/perl update it on the fly
 
 # Service Discovery and DNS server
 
+The problem of linking with containers is that if you restart the linked contaienr (say, zookeeper) and the ip address of that container changes. What will happen? Answer, we need to restart that container.
 This is the most important one.
 
-## Poor Man's DNS Solution
+## Poor Man's DNS Solution: Manually Update Local DNS
 
 Simply use current host as the DNS server
 
-```
-# /etc/dnsmasq.conf
-listen-address=0.0.0.0
-interface=lo
-interface=eth0
-interface=docker0
-resolv-file=/etc/resolv.dnsmasq.conf
-conf-dir=/opt/docker/dnsmasq.d         # <== Here !
-```
+    # /etc/dnsmasq.conf
+    listen-address=0.0.0.0
+    interface=lo
+    interface=eth0
+    interface=docker0
+    resolv-file=/etc/resolv.dnsmasq.conf
+    conf-dir=/opt/docker/dnsmasq.d         # <== Here !
 
 dns
 
-```
-$ container='db'
-$ new_ip=$(docker inspect $container | grep IPAddress | cut -f4 -d'"')
-$ echo "host-record=$container,$new_ip" > /opt/docker/dnsmasq.d/0host_$container
-$ service dnsmasq restart
-```
+    $ container='db'
+    $ new_ip=$(docker inspect $container | grep IPAddress | cut -f4 -d'"')
+    $ echo "host-record=$container,$new_ip" > /opt/docker/dnsmasq.d/0host_$container
+    $ service dnsmasq restart
 
-# Set zookeeper
+## DNS for Service Discovery
 
-- http://zookeeper-user.578899.n2.nabble.com/Starting-zookeeper-in-replicated-mode-td5205720.html
+We use SkyDNS for now and SkyDock is an adapter on top of SkyDNS for this purpose.
+
+# References
+
+- [Starting ZooKeeper in Replicated Mode](http://zookeeper-user.578899.n2.nabble.com/Starting-zookeeper-in-replicated-mode-td5205720.html)
+
 
